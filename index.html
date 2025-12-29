@@ -2,75 +2,636 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Global Operator Systems – After‑Hours Emergency Plumbing Calls</title>
+  <title>24/7 After-Hours Answering Service for Emergency Plumbers Melbourne | Global Operator Systems</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Never miss an emergency plumbing call in Melbourne. AI-powered 24/7 after-hours answering service that qualifies leads and books jobs while you sleep. 14-day free pilot for Melbourne plumbers." />
+  <meta name="keywords" content="after hours answering service Melbourne, emergency plumber answering service, 24/7 plumbing call service Melbourne, plumber after hours calls, AI answering service plumbers" />
+  <link rel="canonical" href="https://globaloperatorsystems.com/" />
   <style>
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 0; background: #f5f5f7; color: #111; }
-    .wrapper { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
-    h1 { font-size: 2rem; margin-bottom: 12px; }
-    h2 { font-size: 1.3rem; margin-top: 32px; margin-bottom: 8px; }
-    p { line-height: 1.5; margin: 8px 0; }
-    ul { padding-left: 20px; }
-    li { margin: 4px 0; }
-    .hero-cta { margin-top: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 16px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: visible;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .logo-icon svg {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .logo-icon .globe {
+      width: 26px;
+      height: 26px;
+      stroke: #667eea;
+      stroke-width: 2;
+    }
+    
+    .logo-icon .signal-waves {
+      position: absolute;
+      right: -10px;
+      top: -8px;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .logo-icon .signal-waves path {
+      stroke: #ff6b35;
+      stroke-width: 3;
+    }
+    
+    .logo-icon .signal-waves circle {
+      fill: #ff6b35;
+      stroke: none;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      padding: 80px 24px 100px;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .hero-text {
+      text-align: left;
+    }
+    
+    .hero h1 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+    
+    .hero-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
     .btn {
-      display: inline-block; padding: 10px 18px; background: #111; color: #fff;
-      text-decoration: none; border-radius: 4px; font-size: 0.95rem;
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
     }
+    
+    .btn-primary {
+      background: #ffffff;
+      color: #667eea;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    
     .btn-secondary {
-      background: #fff; color: #111; border: 1px solid #ccc; margin-left: 8px;
+      background: rgba(255,255,255,0.15);
+      color: #ffffff;
+      border: 2px solid rgba(255,255,255,0.3);
     }
-    .section { background: #fff; border-radius: 8px; padding: 20px 16px; margin-top: 20px; box-shadow: 0 2px 6px rgba(15,15,20,0.03); }
-    footer { margin-top: 32px; font-size: 0.8rem; color: #555; }
+    
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.5);
+    }
+    
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Section Styles */
+    section {
+      padding: 80px 0;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-header h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    
+    .section-header p {
+      font-size: 1.125rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* Problem Section */
+    .problem-section {
+      background: #f8f9fa;
+    }
+    
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .problem-card {
+      background: #ffffff;
+      padding: 32px 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .problem-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    
+    .problem-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .problem-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: #667eea;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .problem-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    
+    .problem-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    /* How It Works Section */
+    .how-it-works {
+      background: #ffffff;
+    }
+    
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 auto 24px;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .step h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    
+    .step p {
+      color: #666;
+      line-height: 1.7;
+    }
+    
+    /* Pilot Section */
+    .pilot-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+    }
+    
+    .pilot-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .pilot-section h2 {
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+    
+    .pilot-section p {
+      font-size: 1.125rem;
+      margin-bottom: 20px;
+      opacity: 0.95;
+    }
+    
+    .pilot-highlight {
+      background: rgba(255,255,255,0.15);
+      padding: 32px;
+      border-radius: 12px;
+      margin-top: 32px;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .pilot-highlight strong {
+      font-size: 1.25rem;
+      display: block;
+      margin-bottom: 16px;
+    }
+    
+    .pilot-highlight a {
+      color: #ffffff;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    
+    .pilot-highlight a:hover {
+      opacity: 0.8;
+    }
+    
+    /* Why Section */
+    .why-section {
+      background: #f8f9fa;
+    }
+    
+    .why-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 48px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    
+    .why-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .why-icon img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+    }
+    
+    .why-text p {
+      font-size: 1.125rem;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .why-text p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Footer */
+    footer {
+      background: #1a1a1a;
+      color: #ffffff;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    
+    footer p {
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+    
+    .footer-tagline {
+      font-size: 0.95rem;
+      opacity: 0.6;
+      margin-top: 16px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .hero-text {
+        text-align: center;
+      }
+      
+      .cta-buttons {
+        justify-content: center;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.125rem;
+      }
+      
+      .section-header h2 {
+        font-size: 1.875rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      section {
+        padding: 60px 0;
+      }
+      
+      .why-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 24px;
+      }
+      
+      .why-icon img {
+        width: 150px;
+        height: 150px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <header class="section">
-      <h1>Never miss another emergency plumbing call after 6 pm in Melbourne.</h1>
-      <p>A 24/7 AI operator that answers, qualifies, and books urgent jobs into your calendar while you sleep.</p>
-      <div class="hero-cta">
-        <a href="#" class="btn">See a 2‑minute demo</a>
-        <a href="#pilot" class="btn btn-secondary">Request a 14‑day pilot</a>
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg class="globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <svg class="signal-waves" viewBox="0 0 24 24">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+            <circle cx="12" cy="20" r="2"/>
+          </svg>
+        </div>
+        <span>Global Operator Systems</span>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section class="section">
-      <h2>The problem with after‑hours calls</h2>
-      <ul>
-        <li>Calls after 6 pm or on weekends often go to voicemail or get missed entirely.</li>
-        <li>Each missed call can be a $400–$1,500 emergency job that goes to the next plumber.</li>
-        <li>Hiring a 24/7 receptionist is too expensive and hard to staff.</li>
-        <li>Generic call centres don’t know your pricing, service areas, or what’s urgent vs routine.</li>
-      </ul>
-    </section>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Never miss another emergency plumbing call after 6 pm in Melbourne</h1>
+        <p class="hero-subtitle">A 24/7 AI-powered after-hours answering service that answers, qualifies, and books urgent plumbing jobs into your calendar while you sleep.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary" aria-label="Watch 2-minute demo of our emergency plumber answering service">See a 2‑minute demo</a>
+          <a href="#pilot" class="btn btn-secondary" aria-label="Request 14-day free pilot for Melbourne plumbers">Request a 14‑day pilot</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="melbourne-emergency-plumber-after-hours-answering-ai-operator-hero.png" alt="24/7 AI operator answering emergency plumbing calls after hours in Melbourne - automated answering service for plumbers">
+      </div>
+    </div>
+  </section>
 
-    <section class="section">
-      <h2>How the AI operator works</h2>
-      <ol>
-        <li><strong>We connect your after‑hours line</strong><br />Your main number diverts to the AI operator after hours or when your team is unavailable.</li>
-        <li><strong>AI answers like a local operator</strong><br />It greets callers in a natural Aussie voice, gathers job details, confirms service areas, and explains basic rates.</li>
-        <li><strong>You get qualified jobs booked in</strong><br />The operator logs the details and books jobs into your calendar, so you only call back real emergencies.</li>
-      </ol>
-    </section>
+  <!-- Problem Section -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>The problem with after‑hours emergency calls for Melbourne plumbers</h2>
+        <p>Every missed after-hours call is lost revenue. Here's what plumbers face every night.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
+            </svg>
+          </div>
+          <h3>Missed emergency opportunities</h3>
+          <p>After-hours calls after 6 pm or on weekends often go to voicemail or get missed entirely—losing you emergency plumbing jobs.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3>Lost revenue</h3>
+          <p>Each missed call can be a $400–$1,500 emergency job that goes straight to the next plumber on the list.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>24/7 coverage is expensive</h3>
+          <p>Hiring a 24/7 receptionist for after-hours answering is too expensive and hard to staff. Generic call centres don't understand your plumbing business.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h3>No qualification</h3>
+          <p>Generic call centres don't know your pricing, service areas, or what's an urgent emergency versus a routine job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="section" id="pilot">
-      <h2>Low‑risk pilot for Melbourne plumbers</h2>
-      <p>We’ll run a 14‑day pilot on your after‑hours calls. If it doesn’t catch at least one job you would have otherwise missed, you pay nothing.</p>
-      <p><strong>Interested?</strong> Email <a href="mailto:roland@globaloperatorsystems.com">roland@globaloperatorsystems.com</a> with your business name and suburb, or reply to the email you received.</p>
-    </section>
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How our 24/7 after-hours answering service works</h2>
+        <p>Three simple steps to capture every emergency plumbing call in Melbourne, even when you're off the tools.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Connect your after-hours line</h3>
+          <p>Your main plumbing business number diverts to our AI answering service after hours or when your team is unavailable. Setup takes minutes.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>AI answers 24/7 naturally</h3>
+          <p>The operator greets callers in a natural Aussie voice, gathers emergency plumbing job details, confirms Melbourne service areas, and explains your rates.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Emergency jobs get booked</h3>
+          <p>Qualified emergency plumbing leads are logged and booked into your calendar automatically, so you only call back real emergencies in Melbourne.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="section">
-      <h2>Why Global Operator Systems?</h2>
-      <p>Global Operator Systems quietly runs after‑hours operator systems for local service businesses around the world.</p>
-      <p>You stay focused on plumbing in Melbourne. Our global operator infrastructure makes sure your phones are covered when your team is off the tools.</p>
-    </section>
+  <!-- Pilot Section -->
+  <section class="pilot-section" id="pilot">
+    <div class="container">
+      <div class="pilot-content">
+        <h2>Low‑risk pilot for Melbourne plumbers</h2>
+        <p>We'll run a 14‑day pilot on your after‑hours calls. If it doesn't catch at least one job you would have otherwise missed, you pay nothing.</p>
+        <div class="pilot-highlight">
+          <strong>Ready to try it?</strong>
+          <p>Email <a href="mailto:team@globaloperatorsystems.com">team@globaloperatorsystems.com</a> with your business name and suburb, or reply to the email you received.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <p>© <span id="year"></span> Global Operator Systems. All rights reserved.</p>
-      <p>Local service businesses, global operators in the background.</p>
-    </footer>
-  </div>
+  <!-- Why Section -->
+  <section class="why-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why choose our after-hours answering service for Melbourne plumbers?</h2>
+      </div>
+      <div class="why-content">
+        <div class="why-icon">
+          <img src="melbourne-emergency-plumber-ai-answering-operator-icon.png" alt="Melbourne emergency plumber 24/7 after-hours answering service location">
+        </div>
+        <div class="why-text">
+          <p>Global Operator Systems quietly runs after‑hours answering operator systems for local service businesses around the world. We specialize in 24/7 emergency call handling for plumbers in Melbourne and beyond. We're not flashy, we're just reliable.</p>
+          <p>You stay focused on doing great emergency plumbing work in Melbourne. Our global after-hours operator infrastructure makes sure your phones are always covered 24/7 when your team is off the tools.</p>
+          <p>We handle the complexity of running a 24/7 answering service operation, so you don't have to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Global Operator Systems. All rights reserved.</p>
+      <p>24/7 After-Hours Answering Service for Emergency Plumbers in Melbourne</p>
+      <p class="footer-tagline">Local service businesses, global operators in the background.</p>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
