@@ -15,6 +15,17 @@
       line-height: 1.6;
       color: #1a1a1a;
       background: #ffffff;
+      .getting-started-steps {
+        padding: 0;
+      }
+      
+      .step-card {
+        padding: 24px;
+      }
+      
+      .faq-item {
+        padding: 20px 24px;
+      }
     }
     
     /* Header */
@@ -290,6 +301,19 @@
       background: #ffffff;
     }
     
+    .workflow-visual {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      text-align: center;
+    }
+    
+    .workflow-visual img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    
     .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -367,14 +391,107 @@
       margin-bottom: 16px;
     }
     
-    .pilot-highlight a {
-      color: #ffffff;
-      font-weight: 600;
-      text-decoration: underline;
+    .contact-form {
+      max-width: 500px;
+      margin: 24px auto 0;
     }
     
-    .pilot-highlight a:hover {
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.15);
+    }
+    
+    .form-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: #ffffff;
+      color: #667eea;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    .email-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.9rem;
       opacity: 0.8;
+    }
+    
+    .whatsapp-cta {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .whatsapp-cta p {
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+    
+    .whatsapp-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: #25D366;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    .whatsapp-button:hover {
+      background: #20BA5A;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+    
+    .whatsapp-icon {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
     }
     
     /* Why Section */
@@ -416,6 +533,94 @@
     
     .why-text p:last-child {
       margin-bottom: 0;
+    }
+    
+    /* Pricing Section */
+    .pricing-section {
+      background: #ffffff;
+    }
+    
+    .getting-started-steps {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .step-card {
+      background: #ffffff;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    
+    .step-card:hover {
+      border-color: #667eea;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.1);
+    }
+    
+    .step-card h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .step-card p {
+      color: #666;
+      line-height: 1.7;
+      margin: 0;
+    }
+    
+    .step-number-inline {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 700;
+      margin-right: 12px;
+      font-size: 1.125rem;
+    }
+    
+    .final-note {
+      text-align: center;
+      max-width: 700px;
+      margin: 40px auto 0;
+      padding: 24px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      color: #444;
+      line-height: 1.7;
+      font-size: 1.125rem;
+    }
+    
+    .faq-section {
+      max-width: 800px;
+      margin: 60px auto 0;
+    }
+    
+    .faq-item {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 16px;
+    }
+    
+    .faq-item h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    
+    .faq-item p {
+      color: #666;
+      line-height: 1.7;
+      margin: 0;
     }
     
     /* Footer */
@@ -518,14 +723,14 @@
     <div class="hero-content">
       <div class="hero-text">
         <h1>Never miss another emergency plumbing call after 6 pm in Melbourne</h1>
-        <p class="hero-subtitle">Call your own natural‑sounding Aussie AI operator, already trained on your Melbourne plumbing business. Try to break it before you ever change your phone setup.</p>
+        <p class="hero-subtitle">Call your own AI after-hours operator—already trained on your Melbourne plumbing business. Try to break it before you ever change your phone setup.</p>
         <div class="cta-buttons">
           <a href="#pilot" class="btn btn-primary" aria-label="Get your custom test line for emergency plumber answering service">Get your test line</a>
           <a href="#how-it-works" class="btn btn-secondary" aria-label="See how our 24/7 answering service works">See how it works</a>
         </div>
       </div>
       <div class="hero-image">
-        <img src="melbourne-emergency-plumber-after-hours-answering-ai-operator-hero.png" alt="24/7 AI operator answering emergency plumbing calls after hours in Melbourne - automated answering service for plumbers">
+        <img src="melbourne-emergency-plumber-after-hours-answering-ai-operator-hero.png" alt="Melbourne emergency plumber using 24/7 AI after-hours answering service to capture calls while off the tools - automated phone system for plumbing businesses">
       </div>
     </div>
   </section>
@@ -593,6 +798,11 @@
         <h2>How our test-first approach works for Melbourne plumbers</h2>
         <p>Three simple steps to try your own 24/7 after-hours answering service before any commitment.</p>
       </div>
+      
+      <div class="workflow-visual">
+        <img src="ai-operator-workflow-diagram-melbourne-plumber.png" alt="AI operator workflow diagram showing how emergency calls are answered, qualified, and booked for Melbourne plumbers">
+      </div>
+      
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
@@ -622,7 +832,108 @@
         <p>If you don't like how it performs, we stop there—no commitment. If you do like it, we can plan a small live test on your terms, or move straight to after-hours integration.</p>
         <div class="pilot-highlight">
           <strong>Ready to try your own 24/7 answering service?</strong>
-          <p>Email <a href="mailto:team@globaloperatorsystems.com">team@globaloperatorsystems.com</a> with your plumbing business name and Melbourne suburb to request your custom test line.</p>
+          <form class="contact-form" action="mailto:team@globaloperatorsystems.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" name="name" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label>Business Name</label>
+              <input type="text" name="business" placeholder="Smith Plumbing" required>
+            </div>
+            <div class="form-group">
+              <label>Melbourne Suburbs You Cover</label>
+              <input type="text" name="suburbs" placeholder="Carlton, Brunswick, Fitzroy..." required>
+            </div>
+            <div class="form-group">
+              <label>Email or Phone</label>
+              <input type="text" name="contact" placeholder="john@smithplumbing.com.au or 0412 345 678" required>
+            </div>
+            <button type="submit" class="form-submit">Request Your Test Line</button>
+          </form>
+          <p class="email-note">Or email directly: <a href="mailto:team@globaloperatorsystems.com" style="color: #ffffff; text-decoration: underline;">team@globaloperatorsystems.com</a><br>We respond within 24 hours.</p>
+          
+          <div class="whatsapp-cta">
+            <p>Prefer to chat? Message us on WhatsApp (free worldwide)</p>
+            <a href="https://wa.me/15127313529?text=Hi%2C%20I'm%20interested%20in%20the%2024/7%20AI%20answering%20service%20for%20my%20Melbourne%20plumbing%20business.%20Can%20we%20chat%3F" class="whatsapp-button" target="_blank" rel="noopener noreferrer">
+              <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              WhatsApp us instantly
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Get Started Section -->
+  <section class="pricing-section" id="get-started">
+    <div class="container">
+      <div class="section-header">
+        <h2>How to get your 24/7 AI answering service for emergency plumbing</h2>
+        <p>From test line to live integration in as little as one week.</p>
+      </div>
+      <div class="getting-started-steps">
+        <div class="step-card">
+          <h3><span class="step-number-inline">1</span>Request Your Custom Test Line</h3>
+          <p>Email <a href="mailto:team@globaloperatorsystems.com" style="color: #667eea; font-weight: 600;">team@globaloperatorsystems.com</a> with your plumbing business name and the Melbourne suburbs you cover. We'll schedule a brief call to understand your after-hours call patterns.</p>
+        </div>
+        
+        <div class="step-card">
+          <h3><span class="step-number-inline">2</span>We Build Your AI Operator (3-5 days)</h3>
+          <p>We train a custom AI operator on your business—your services, emergency pricing, and Melbourne service areas. You get a private phone number to test.</p>
+        </div>
+        
+        <div class="step-card">
+          <h3><span class="step-number-inline">3</span>Try to Break It</h3>
+          <p>Call it yourself. Test it with real emergency scenarios—burst pipes, blocked drains, hot water failures. See how it handles qualification and booking. If you like it, we talk integration. If not, we stop there.</p>
+        </div>
+        
+        <div class="step-card">
+          <h3><span class="step-number-inline">4</span>Go Live (Your Choice)</h3>
+          <p>If you're happy with how it performs, we'll discuss pricing based on your call volume and which automation features you want. Then we integrate it with your after-hours setup.</p>
+        </div>
+      </div>
+      
+      <div class="final-note">
+        Once you've tested it and seen how it handles real emergency calls, most plumbers are ready to go live within a week.
+      </div>
+      
+      <div class="faq-section">
+        <div class="faq-item">
+          <h4>What happens when I call the test line?</h4>
+          <p>You'll hear your AI operator answer like a real receptionist—greeting callers with your business name, asking about their plumbing emergency, confirming if you service their Melbourne suburb, explaining your after-hours rates, and offering to book them in. Try to stump it with edge cases or tricky questions.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>What counts as "after hours"?</h4>
+          <p>Whatever you want. Most Melbourne plumbers forward calls to us after 5pm on weekdays and all day Saturday/Sunday. It's fully customizable to your schedule—could be 24/7, weekends only, or just overnight coverage.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>Will this interfere with my current phone setup?</h4>
+          <p>No. We give you a separate number for testing. If you decide to go live, we use simple call forwarding—nothing to install, no hardware needed, and easy to reverse if you ever want to go back.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>How much does it cost?</h4>
+          <p>Pricing depends on your call volume and which features you need—just the answering service, or the full suite with SMS automation and review requests. We'll give you a custom quote after you test your operator and we understand your business.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>Is there a contract?</h4>
+          <p>Month-to-month. Cancel anytime. Most plumbers never do because missed calls cost more than our service.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>What if I don't like how it performs?</h4>
+          <p>Then we stop there. No commitment, no hard feelings. You only pay if you decide to go live with it.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h4>What do you need from me to build the AI operator?</h4>
+          <p>Just a 15-minute call to confirm your services, pricing, and Melbourne suburbs you cover. We train the AI on your public website and business information, so you don't need to write anything or send documents. We'll verify everything with you before you test it.</p>
         </div>
       </div>
     </div>
@@ -639,9 +950,11 @@
           <img src="melbourne-emergency-plumber-ai-answering-operator-icon.jpg" alt="Melbourne emergency plumber 24/7 after-hours answering service location">
         </div>
         <div class="why-text">
-          <p>Global Operator Systems quietly runs after‑hours answering operator systems for local service businesses around the world. We specialize in 24/7 emergency call handling for plumbers in Melbourne and beyond.</p>
+          <p>Global Operator Systems runs the infrastructure. You run your business.</p>
+          <p>We've been handling after-hours emergency calls for trades and service businesses quietly in the background—across time zones, across continents. Melbourne plumbers are our newest operators on the network.</p>
           <p>We start with a safe test line that you can call yourself—no pressure, no risk. You stay in control. Only when you're confident it handles emergency calls the way you want do we talk about plugging it into your after-hours setup.</p>
           <p>You stay focused on doing great emergency plumbing work in Melbourne. Our global after-hours operator infrastructure makes sure your phones are always covered 24/7 when your team is off the tools—but only after you've tested it yourself first.</p>
+          <p><em>Beyond plumbers:</em> The same infrastructure works for electricians, HVAC, locksmiths, property managers, medical clinics, and other service businesses that can't afford to miss after-hours calls.</p>
         </div>
       </div>
     </div>
@@ -652,7 +965,16 @@
     <div class="container">
       <p>&copy; <span id="year"></span> Global Operator Systems. All rights reserved.</p>
       <p>24/7 After-Hours Answering Service for Emergency Plumbers in Melbourne</p>
+      <p style="margin-top: 16px;">
+        <a href="mailto:team@globaloperatorsystems.com" style="color: #ffffff; text-decoration: underline;">team@globaloperatorsystems.com</a> | 
+        <a href="https://wa.me/15127313529" target="_blank" rel="noopener noreferrer" style="color: #25D366; text-decoration: underline;">WhatsApp: +1 (512) 731-3529</a>
+      </p>
+      <p style="margin-top: 16px; font-size: 0.9rem;">Not a Melbourne plumber? We run the same 24/7 after-hours infrastructure for electricians, HVAC, locksmiths, medical clinics, and property managers in other markets. Email or WhatsApp us to discuss.</p>
       <p class="footer-tagline">Local service businesses, global operators in the background.</p>
+      <p style="margin-top: 24px; font-size: 0.85rem; opacity: 0.6;">
+        <a href="#privacy" style="color: #ffffff; text-decoration: none; margin: 0 12px;">Privacy Policy</a> | 
+        <a href="#terms" style="color: #ffffff; text-decoration: none; margin: 0 12px;">Terms of Service</a>
+      </p>
     </div>
   </footer>
 
