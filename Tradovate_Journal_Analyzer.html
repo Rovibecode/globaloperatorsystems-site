@@ -152,6 +152,19 @@
     <article class="table-card"><div class="ph"><h2>All trades</h2></div><div class="tw" id="allTable"></div></article>
     <article class="table-card"><div class="ph"><h2>Daily summary</h2></div><div class="tw" id="dsTable"></div></article>
   </section>
+
+  <section class="panel" id="notionSection" style="margin-top:0">
+    <div class="ph" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <div><h2>Notion journal export</h2><p>Paste-ready summary of everything that moves the needle.</p></div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="btn btn-primary" id="copyBtn">Copy to clipboard</button>
+        <button class="btn btn-secondary" id="dlMdBtn">Download .md</button>
+      </div>
+    </div>
+    <div class="pb">
+      <pre id="notionOut" style="white-space:pre-wrap;word-break:break-word;font-family:'IBM Plex Mono',monospace;font-size:clamp(.75rem,.7rem + .25vw,.875rem);color:var(--text);background:var(--surface2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:1.25rem;line-height:1.7;max-height:520px;overflow-y:auto">Upload a CSV to generate your Notion export.</pre>
+    </div>
+  </section>
 </main>
 </div>
 <div class="foot">Net P&amp;L = Tradovate gross P&amp;L minus commissions set above. No data leaves your browser.</div>
@@ -406,11 +419,128 @@ function analyze(text,filename){
     renderSummary(trades,stats,hrG,ctG,leaks);
     renderTables(trades,hrG,wdG,ctG,leaks,daily);
     renderCharts(trades,hrG,daily);
+    generateNotion(trades,stats,hrG,wdG,ctG,leaks,daily);
   }catch(err){
     document.getElementById('summary').innerHTML='<div class="bullet"><strong>Import error:</strong> '+err.message+'</div>';
     document.getElementById('statusFile').textContent='Error';
     console.error(err);
   }
+}
+
+
+function generateNotion(trades, stats, hrG, wdG, ctG, leaks, daily) {
+  var dateRange = '';
+  var dates = daily.map(function(d){return d.date;}).sort();
+  if(dates.length) dateRange = dates[0] + ' to ' + dates[dates.length-1];
+
+  var profFactor = (function(){
+    var gw=0,gl=0;
+    trades.forEach(function(t){if(t.pnl>0)gw+=t.pnl;else gl+=Math.abs(t.pnl);});
+    return gl>0?(gw/gl).toFixed(2):'N/A';
+  })();
+  var avgWin=(function(){var w=trades.filter(function(t){return t.pnl>0;});return w.length?w.reduce(function(s,t){return s+t.pnl;},0)/w.length:0;})();
+  var avgLoss=(function(){var l=trades.filter(function(t){return t.pnl<=0;});return l.length?l.reduce(function(s,t){return s+t.pnl;},0)/l.length:0;})();
+
+  // Consecutive loss streak
+  var maxStreak=0,curStreak=0;
+  var sorted=trades.slice().sort(function(a,b){return (a.entryDT||0)-(b.entryDT||0);});
+  sorted.forEach(function(t){if(t.pnl<=0){curStreak++;if(curStreak>maxStreak)maxStreak=curStreak;}else curStreak=0;});
+
+  // Max drawdown from equity curve
+  var peak=0,maxDD=0,running=0;
+  sorted.forEach(function(t){running+=t.pnl;if(running>peak)peak=running;var dd=peak-running;if(dd>maxDD)maxDD=dd;});
+
+  // Best/worst hour
+  var bh=hrG.slice().sort(function(a,b){return b.avgTrade-a.avgTrade;})[0];
+  var wh=hrG.slice().sort(function(a,b){return a.avgTrade-b.avgTrade;})[0];
+
+  // Best/worst weekday
+  var bwd=wdG.slice().sort(function(a,b){return b.totalPnl-a.totalPnl;})[0];
+  var wwd=wdG.slice().sort(function(a,b){return a.totalPnl-b.totalPnl;})[0];
+
+  // Contracts
+  var ctLines=ctG.slice().sort(function(a,b){return b.totalPnl-a.totalPnl;}).map(function(c){
+    return '  '+c.label+': '+fmtM(c.totalPnl)+' | '+c.trades+' trades | '+fmtP(c.winRate)+' WR | Avg '+fmtM(c.avgTrade);
+  }).join('\n');
+
+  // Daily
+  var dsLines=daily.map(function(d){
+    return '  '+d.date+': '+fmtM(d.net)+(d.net>=0?' +':'')+' ('+d.trades+' trades, gross '+fmtM(d.gross)+', comm -'+fmtM(d.comm)+')';
+  }).join('\n');
+
+  // Leaks
+  var leakLines=leaks.length?leaks.map(function(l){return '  ! '+l.label+': '+fmtM(l.avgTrade)+' avg over '+l.trades+' trades';}).join('\n'):'  None flagged at current threshold.';
+
+  var now=new Date();
+  var ts=now.toISOString().slice(0,10)+' '+pad(now.getHours())+':'+pad(now.getMinutes());
+
+  var out =
+'# Trading Performance Report\n'+
+'Generated: '+ts+' | '+TIMEZONE_LABEL+'\n'+
+'Period: '+dateRange+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## Summary\n'+
+'- Net P&L:        '+fmtM(stats.total)+'\n'+
+'- Gross P&L:      '+fmtM(stats.gross)+'\n'+
+'- Commissions:    -'+fmtM(stats.totalComm)+'\n'+
+'- Total trades:   '+stats.trades+'\n'+
+'- Win rate:       '+fmtP(stats.winRate)+' ('+stats.wins+' wins / '+(stats.trades-stats.wins)+' losses)\n'+
+'- Expectancy:     '+fmtM(stats.avgTrade)+' per trade\n'+
+'- Avg win:        '+fmtM(avgWin)+'\n'+
+'- Avg loss:       '+fmtM(avgLoss)+'\n'+
+'- Profit factor:  '+profFactor+'\n'+
+'- Largest win:    '+fmtM(stats.best)+'\n'+
+'- Largest loss:   '+fmtM(stats.worst)+'\n'+
+'- Max drawdown:   -'+fmtM(maxDD)+'\n'+
+'- Max consec. losses: '+maxStreak+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## Daily Breakdown\n'+
+dsLines+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## By Contract\n'+
+ctLines+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## Session Edge ('+TIMEZONE_LABEL+')\n'+
+'Best hour:   '+(bh?bh.label+' — '+fmtM(bh.totalPnl)+' total, '+fmtM(bh.avgTrade)+' avg ('+bh.trades+' trades)':'N/A')+'\n'+
+'Worst hour:  '+(wh?wh.label+' — '+fmtM(wh.totalPnl)+' total, '+fmtM(wh.avgTrade)+' avg ('+wh.trades+' trades)':'N/A')+'\n'+
+'\n'+
+'Best day:    '+(bwd?bwd.label+' — '+fmtM(bwd.totalPnl)+' total, '+fmtM(bwd.avgTrade)+' avg ('+bwd.trades+' trades)':'N/A')+'\n'+
+'Worst day:   '+(wwd?wwd.label+' — '+fmtM(wwd.totalPnl)+' total, '+fmtM(wwd.avgTrade)+' avg ('+wwd.trades+' trades)':'N/A')+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## Flagged Leaks\n'+
+leakLines+'\n'+
+'\n'+
+'---\n'+
+'\n'+
+'## Notes\n'+
+'(Add your manual observations here)\n'+
+'\n';
+
+  document.getElementById('notionOut').textContent=out;
+
+  document.getElementById('copyBtn').onclick=function(){
+    navigator.clipboard.writeText(out).then(function(){
+      var b=document.getElementById('copyBtn');b.textContent='Copied!';setTimeout(function(){b.textContent='Copy to clipboard';},2000);
+    }).catch(function(){
+      document.getElementById('notionOut').select();document.execCommand('copy');
+    });
+  };
+
+  document.getElementById('dlMdBtn').onclick=function(){
+    var blob=new Blob([out],{type:'text/markdown'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='trading-report-'+dateRange+'.md';a.click();
+  };
 }
 
 document.getElementById('csvInput').addEventListener('change',function(e){
