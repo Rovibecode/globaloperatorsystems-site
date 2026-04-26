@@ -105,6 +105,14 @@
           <input id="threshInput" type="number" step="1" value="3"/>
           <div class="hint">Only flag a time/day/contract as a leak if it has at least this many trades. Use 3–5 for weekly data, 8–10 for monthly.</div>
         </div>
+        <div class="field" style="margin-top:1rem">
+          <label>Date assignment</label>
+          <select id="dateMode">
+            <option value="entry">Entry time (boughtTimestamp)</option>
+            <option value="exit" selected>Exit time (soldTimestamp) — matches Notion</option>
+          </select>
+          <div class="hint">Use exit time if your Notion journal logs trades by when they closed. Fixes cross-midnight date swaps.</div>
+        </div>
       </div>
       <div class="srow">
         <span class="chip" id="statusFile">No file loaded</span>
@@ -270,16 +278,19 @@ function buildTrades(rows,commPerSide){
     var qty=parseNum(row.qty||row.quantity||'1')||1;
     var commission=commPerSide*2*qty;
     var pnl=grossPnl-commission;
+    var dateMode=document.getElementById('dateMode')?document.getElementById('dateMode').value:'entry';
     var entryDT=parseDT(row.boughttimestamp||row.bought_timestamp||row.entrytime||row.entry_time||row.date);
-    var entryDate=entryDT?entryDT.toISOString().slice(0,10):'Unknown';
+    var exitDT2=parseDT(row.soldtimestamp||row.sold_timestamp||row.exittime||row.exit_time);
+    var dateDT=dateMode==='exit'&&exitDT2?exitDT2:entryDT;
+    var entryDate=dateDT?dateDT.toISOString().slice(0,10):'Unknown';
     out.push({
       id:i+1,symbol:symbol,root:root,qty:qty,
       buyPrice:parseNum(row.buyprice||row.buy_price),
       sellPrice:parseNum(row.sellprice||row.sell_price),
       grossPnl:grossPnl,commission:commission,pnl:pnl,
       entryDT:entryDT,entryDate:entryDate,
-      hourBlock:entryDT?hourBlock(entryDT):'Unknown',
-      weekday:entryDT?DAYS[entryDT.getDay()]:'Unknown',
+      hourBlock:dateDT?hourBlock(dateDT):'Unknown',
+      weekday:dateDT?DAYS[dateDT.getDay()]:'Unknown',
       duration:row.duration||''
     });
   });
@@ -549,7 +560,7 @@ document.getElementById('csvInput').addEventListener('change',function(e){
   reader.onload=function(){analyze(reader.result,file.name);};
   reader.readAsText(file);
 });
-['commInput','threshInput'].forEach(function(id){
+['commInput','threshInput','dateMode'].forEach(function(id){
   document.getElementById(id).addEventListener('change',function(){
     var inp=document.getElementById('csvInput');
     if(inp.files[0]){var r=new FileReader();r.onload=function(){analyze(r.result,inp.files[0].name);};r.readAsText(inp.files[0]);}
