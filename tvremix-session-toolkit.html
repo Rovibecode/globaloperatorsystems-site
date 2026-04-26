@@ -19,6 +19,7 @@
   --error:#a12c7b;--error-hl:#e0ced7;
   --warning:#964219;--warning-hl:#ddcfc6;
   --blue:#006494;--blue-hl:#c6d8e4;
+  --invest:#5a3d8a;--invest-hl:#e0d8f0;
   --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
   --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
   --shadow-lg:0 12px 32px oklch(0.2 0.01 80/0.12);
@@ -36,6 +37,7 @@
   --error:#d163a7;--error-hl:#4c3d46;
   --warning:#bb653b;--warning-hl:#564942;
   --blue:#5591c7;--blue-hl:#3a4550;
+  --invest:#9b7fd4;--invest-hl:#3a3250;
   --shadow-sm:0 1px 2px oklch(0 0 0/0.2);
   --shadow-md:0 4px 12px oklch(0 0 0/0.3);
   --shadow-lg:0 12px 32px oklch(0 0 0/0.4);
@@ -64,6 +66,7 @@ nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.
 .nav-tab{padding:0.625rem 1rem;font-size:0.8125rem;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer;transition:color var(--trans),border-color var(--trans)}
 .nav-tab:hover{color:var(--text)}
 .nav-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.nav-tab.invest-tab.active{color:var(--invest);border-bottom-color:var(--invest)}
 
 main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
 
@@ -101,6 +104,7 @@ main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
 .tag-brief{background:var(--gold-hl);color:var(--gold)}
 .tag-rules{background:var(--error-hl);color:var(--error)}
 .tag-budget{background:var(--success-hl);color:var(--success)}
+.tag-invest{background:var(--invest-hl);color:var(--invest)}
 
 /* BUDGET TABLE */
 .budget-table{width:100%;border-collapse:collapse;font-size:0.8125rem;background:var(--surface);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border)}
@@ -131,8 +135,10 @@ main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
 .info-block{padding:0.75rem 1rem;border-radius:var(--r-md);font-size:0.8125rem;margin-bottom:1rem;border-left:3px solid}
 .info-block.tip{background:var(--primary-hl);border-color:var(--primary);color:var(--text)}
 .info-block.warn{background:var(--warning-hl);border-color:var(--warning);color:var(--text)}
+.info-block.invest{background:var(--invest-hl);border-color:var(--invest);color:var(--text)}
 .info-block strong{color:var(--primary)}
 .info-block.warn strong{color:var(--warning)}
+.info-block.invest strong{color:var(--invest)}
 
 @media(max-width:600px){
   header{padding:0.625rem 1rem}
@@ -171,6 +177,7 @@ main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
   <button class="nav-tab" data-tab="memory">Memory Prompts</button>
   <button class="nav-tab" data-tab="budget">Prompt Budget</button>
   <button class="nav-tab" data-tab="system">System View</button>
+  <button class="nav-tab invest-tab" data-tab="investments">Investments</button>
 </nav>
 
 <main>
@@ -283,7 +290,6 @@ Do not create any alerts yet. I need to confirm first.</div>
 
   <div class="prompt-grid">
 
-    
     <div class="prompt-card">
       <div class="prompt-card-header">
         <div class="prompt-card-meta">
@@ -342,7 +348,6 @@ This is a prop rule guard, not a trade alert. Confirm it is set.</div>
       </div>
     </div>
 
-    
   </div>
 </div>
 
@@ -377,6 +382,10 @@ PROP FIRM RULES (hard limits — never suggest trades that violate these):
 - Daily loss limit: $1000 — if hit, I stop trading for the day
 - Max drawdown: $2000 — if hit, account is at risk
 
+SESSION STATUS (fill in before pasting):
+- Losses today so far: [0 / 1 / 2]
+  → If 2: flag any new setup suggestion with "REVENGE TRADE RISK — confirm you want to proceed"
+
 TRADE CRITERIA (only suggest setups that meet all of these):
 - Setup must be at a named level: PDH, PDL, session H/L, or identified FVG
 - Minimum R:R = 2:1 before I consider entry
@@ -386,7 +395,7 @@ TRADE CRITERIA (only suggest setups that meet all of these):
 PERSONALITY: Give me numbers and decisions. Only short explanations if needed.</div>
       </div>
       <div class="prompt-footer">
-        <span class="prompt-hint">Daily loss and max drawdown are already filled in.</span>
+        <span class="prompt-hint">Fill in today's loss count before pasting. 0 = fresh session. 2 = revenge-trade guard is active.</span>
         <button class="copy-btn" onclick="copyPrompt(this)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           Copy
@@ -499,7 +508,7 @@ My rule: news is a context check, not an automatic ban. Flag timing and likely v
         <td>1</td>
         <td><span class="rec">required</span></td>
       </tr>
-            <tr>
+      <tr>
         <td>On level approach</td>
         <td>S3 · Setup confirmation</td>
         <td>1</td>
@@ -529,6 +538,12 @@ My rule: news is a context check, not an automatic ban. Flag timing and likely v
         <td>2</td>
         <td><span class="tag tag-brief">if trading again</span></td>
       </tr>
+      <tr>
+        <td style="color:var(--invest)">Non-trading / off-session</td>
+        <td style="color:var(--invest)">I1–I5 · Investments (separate use case)</td>
+        <td>1–2</td>
+        <td><span class="tag tag-invest">investments</span></td>
+      </tr>
     </tbody>
   </table>
 
@@ -538,6 +553,7 @@ My rule: news is a context check, not an automatic ban. Flag timing and likely v
       Quiet day (no trade): <strong style="color:var(--success)">3–4 prompts</strong> — M1 + S1 + S2<br>
       Normal day (1 trade): <strong style="color:var(--gold)">5–7 prompts</strong> — above + S3 + A3 + M2<br>
       Active day (2 sessions): <strong style="color:var(--warning)">8–11 prompts</strong> — two session scans + 2 setup checks<br>
+      Investment research day: <strong style="color:var(--invest)">2–4 prompts</strong> — use I1–I5 only on off-session days or after trading quota is spent wisely.<br>
       Do not exceed 15. If you hit 12, stop using Remix and trade from your existing alerts only.
     </div>
   </div>
@@ -611,6 +627,170 @@ My rule: news is a context check, not an automatic ban. Flag timing and likely v
   </div>
 
   <div class="info-block tip" style="margin-top:1rem"><strong>Key principle:</strong> Remix is your pre-session analyst and custom-level guard. Your existing chart alerts already handle PDH/PDL arrival. Remix adds decision support, not duplicate alerts.</div>
+</div>
+
+<!-- ─── INVESTMENTS ────────────────────────────────────────────────── -->
+<div class="section" id="tab-investments">
+  <div class="section-header">
+    <h2>Investments Prompts</h2>
+    <p>For stocks and crypto long-term positions. Use these off-session or on non-trading days. These are separate from your 15-prompt trading quota — treat them as a distinct use case.</p>
+  </div>
+
+  <div class="info-block invest"><strong>When to use this tab:</strong> Research before entering a new long-term position, reviewing existing holdings monthly, checking earnings calendars, or deciding between two candidates. These are not intraday tools — do not mix with your session scan workflow.</div>
+
+  <div class="prompt-grid">
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-invest">Invest</span>
+          <span class="prompt-label">I1 · New Position Research</span>
+        </div>
+        <span class="prompt-quota">1–2 prompts</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Research [TICKER] for a potential long-term position. Give me the following in order:
+
+1. Ticker overview: what the company does, sector, market cap.
+2. 52-week range: current price vs. high and low.
+3. Revenue growth: last 2 years YoY. Growing, flat, or declining?
+4. Margins: gross and net margin — are they expanding or compressing?
+5. Debt: debt-to-equity ratio. Is the balance sheet clean?
+6. Cash flow: is free cash flow positive?
+7. Analyst targets: consensus price target, % upside from current, and rating mix (buy/hold/sell count).
+8. Weekly trend: is price above or below the 20W and 50W moving average?
+9. Key catalyst: one upcoming event or driver that could move the stock.
+10. Key risk: one thing that could invalidate the thesis.
+11. Verdict: Buy / Watch / Avoid — one sentence.
+
+Numbers only where possible. No padding.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Replace [TICKER] with the stock or crypto symbol. Works for equities and large-cap crypto.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-invest">Invest</span>
+          <span class="prompt-label">I2 · Existing Position Review</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">I hold [TICKER]. My original thesis was: [ONE SENTENCE — e.g. "revenue acceleration + margin expansion into 2026"].
+
+Review this position now:
+1. Has the thesis changed? Is the original reason still valid?
+2. What is the current price vs. my entry of [ENTRY_PRICE]? Am I up or down?
+3. Are there any upcoming earnings, dividends, or key events in the next 30 days?
+4. Has anything materially changed — guidance cut, management change, competitor threat?
+5. Decision: Hold / Add / Trim / Exit — and one sentence why.
+
+Be direct. I do not need a full re-research — just a thesis check.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run monthly or after any major news on a holding. Fill in ticker, thesis, and entry price.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-invest">Invest</span>
+          <span class="prompt-label">I3 · Earnings &amp; Events Check</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Check upcoming earnings and key events for my portfolio. My holdings are: [TICKER1, TICKER2, TICKER3 — list all].
+
+For each:
+1. Next earnings date (confirmed or estimated).
+2. Any dividends or ex-dividend dates in the next 60 days.
+3. Any known catalysts — product launches, regulatory decisions, analyst days.
+4. Flag any that report within the next 14 days as HIGH PRIORITY.
+
+Format as a table: Ticker | Event | Date | Priority.
+Sort by date ascending.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run this at the start of each month. Fill in your full holdings list before pasting.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-invest">Invest</span>
+          <span class="prompt-label">I4 · Compare Two Positions</span>
+        </div>
+        <span class="prompt-quota">1–2 prompts</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">I am deciding between [TICKER_A] and [TICKER_B] for a long-term position. Compare them on:
+
+1. Revenue growth (last 2Y YoY)
+2. Net margin
+3. Analyst upside % from current price
+4. Weekly trend: above or below 20W MA?
+5. Relative strength: which has outperformed the S&P 500 over the last 6 months?
+6. Key differentiator: one reason to prefer A over B, and one reason to prefer B over A.
+7. Winner: which would you pick for a 12–18 month hold, and why in one sentence.
+
+Format as a side-by-side comparison table where possible.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Use when allocating a fixed amount between two candidates. Replace both tickers before copying.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-invest">Invest</span>
+          <span class="prompt-label">I5 · Sector Rotation Check</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Give me a current sector rotation snapshot for US equities.
+
+1. Top 3 strongest sectors right now — ranked by price performance and relative strength vs. SPY over the last 4 weeks.
+2. Bottom 3 weakest sectors — same criteria.
+3. What is the likely rotation direction over the next 1–3 months based on macro context (rates, growth, risk appetite)?
+4. One sector I should be overweight and one I should be underweight given current conditions.
+5. Any specific ETF or sector proxy worth watching (1 per sector max).
+
+Keep it tight. I want allocation signal, not a macro essay.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run monthly or after major macro shifts (Fed decision, CPI print, earnings season start). No fill-ins needed.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </main>
