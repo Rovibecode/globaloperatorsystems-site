@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TVRemix Session Toolkit — MNQ First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+  --bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede8;--surface-dynamic:#e6e4df;
+  --divider:#dcd9d5;--border:#d4d1ca;
+  --text:#28251d;--text-muted:#7a7974;--text-faint:#bab9b4;--text-inverse:#f9f8f4;
+  --primary:#01696f;--primary-hover:#0c4e54;--primary-hl:#cedcd8;
+  --gold:#d19900;--gold-hl:#e9e0c6;
+  --success:#437a22;--success-hl:#d4dfcc;
+  --error:#a12c7b;--error-hl:#e0ced7;
+  --warning:#964219;--warning-hl:#ddcfc6;
+  --blue:#006494;--blue-hl:#c6d8e4;
+  --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);
+  --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+  --shadow-lg:0 12px 32px oklch(0.2 0.01 80/0.12);
+  --r-sm:0.375rem;--r-md:0.5rem;--r-lg:0.75rem;--r-xl:1rem;--r-full:9999px;
+  --trans:180ms cubic-bezier(0.16,1,0.3,1);
+  --font-body:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace;
+}
+[data-theme="dark"]{
+  --bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;--surface-dynamic:#2d2c2a;
+  --divider:#262523;--border:#393836;
+  --text:#cdccca;--text-muted:#797876;--text-faint:#5a5957;--text-inverse:#2b2a28;
+  --primary:#4f98a3;--primary-hover:#227f8b;--primary-hl:#313b3b;
+  --gold:#e8af34;--gold-hl:#4d4332;
+  --success:#6daa45;--success-hl:#3a4435;
+  --error:#d163a7;--error-hl:#4c3d46;
+  --warning:#bb653b;--warning-hl:#564942;
+  --blue:#5591c7;--blue-hl:#3a4550;
+  --shadow-sm:0 1px 2px oklch(0 0 0/0.2);
+  --shadow-md:0 4px 12px oklch(0 0 0/0.3);
+  --shadow-lg:0 12px 32px oklch(0 0 0/0.4);
+}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:80px}
+body{min-height:100dvh;font-family:var(--font-body);font-size:1rem;color:var(--text);background:var(--bg);line-height:1.6}
+a,button,[role="button"]{transition:color var(--trans),background var(--trans),border-color var(--trans),box-shadow var(--trans)}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+img{display:block;max-width:100%;height:auto}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+
+/* LAYOUT */
+.app{display:flex;flex-direction:column;min-height:100dvh}
+header{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{display:flex;align-items:center;gap:0.625rem;text-decoration:none;color:var(--text)}
+.logo-mark{width:28px;height:28px;flex-shrink:0}
+.logo-text{font-size:0.875rem;font-weight:600;letter-spacing:-0.01em}
+.logo-sub{font-size:0.75rem;color:var(--text-muted);font-weight:400}
+.header-right{display:flex;align-items:center;gap:0.75rem}
+.quota-badge{display:flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-full);padding:0.25rem 0.75rem}
+.quota-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.theme-btn{width:32px;height:32px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;color:var(--text-muted);border:1px solid var(--border)}
+.theme-btn:hover{color:var(--text);background:var(--surface)}
+
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-tab{padding:0.625rem 1rem;font-size:0.8125rem;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer;transition:color var(--trans),border-color var(--trans)}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+
+main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
+
+/* SECTION */
+.section{display:none}
+.section.active{display:block}
+.section-header{margin-bottom:1.5rem}
+.section-header h2{font-size:1.125rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:0.25rem}
+.section-header p{font-size:0.875rem;color:var(--text-muted);max-width:64ch}
+
+/* PROMPT CARDS */
+.prompt-grid{display:flex;flex-direction:column;gap:1rem}
+.prompt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.prompt-card-header{padding:0.875rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.prompt-card-meta{display:flex;align-items:center;gap:0.5rem;min-width:0}
+.prompt-label{font-size:0.8125rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prompt-quota{font-size:0.6875rem;color:var(--text-muted);background:var(--surface-dynamic);border-radius:var(--r-full);padding:0.125rem 0.5rem;white-space:nowrap;flex-shrink:0}
+.prompt-body{padding:1rem;position:relative}
+.prompt-text{font-family:var(--font-mono);font-size:0.75rem;line-height:1.65;color:var(--text);background:var(--surface-offset);border-radius:var(--r-md);padding:0.875rem 1rem;white-space:pre-wrap;word-break:break-word;border:1px solid var(--border)}
+.prompt-footer{padding:0 1rem 0.875rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem}
+.prompt-hint{font-size:0.75rem;color:var(--text-muted);max-width:52ch}
+.copy-btn{display:flex;align-items:center;gap:0.375rem;font-size:0.75rem;font-weight:500;padding:0.375rem 0.75rem;border-radius:var(--r-md);border:1px solid var(--border);color:var(--text-muted);white-space:nowrap;flex-shrink:0}
+.copy-btn:hover{background:var(--surface-dynamic);color:var(--text);border-color:var(--primary)}
+.copy-btn.copied{background:var(--success-hl);color:var(--success);border-color:var(--success)}
+
+/* FILLABLE FIELDS */
+.fill-note{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:var(--gold-hl);border-radius:var(--r-md);border-left:3px solid var(--gold)}
+.fill-highlight{background:var(--gold-hl);color:var(--gold);border-radius:2px;padding:0 2px;font-style:normal}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;gap:0.25rem;font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:0.125rem 0.5rem;border-radius:var(--r-full)}
+.tag-scan{background:var(--blue-hl);color:var(--blue)}
+.tag-alert{background:var(--primary-hl);color:var(--primary)}
+.tag-memory{background:var(--warning-hl);color:var(--warning)}
+.tag-brief{background:var(--gold-hl);color:var(--gold)}
+.tag-rules{background:var(--error-hl);color:var(--error)}
+.tag-budget{background:var(--success-hl);color:var(--success)}
+
+/* BUDGET TABLE */
+.budget-table{width:100%;border-collapse:collapse;font-size:0.8125rem;background:var(--surface);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border)}
+.budget-table th{padding:0.625rem 0.875rem;font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);background:var(--surface-2);text-align:left;border-bottom:1px solid var(--border)}
+.budget-table td{padding:0.625rem 0.875rem;border-bottom:1px solid var(--divider);color:var(--text);vertical-align:top}
+.budget-table tr:last-child td{border-bottom:none}
+.budget-table tr:hover td{background:var(--surface-2)}
+.rec{display:inline-block;font-size:0.6875rem;font-weight:600;padding:0.125rem 0.5rem;border-radius:var(--r-full);background:var(--primary-hl);color:var(--primary)}
+
+/* RULES BUILDER */
+.rules-grid{display:grid;gap:0.75rem}
+.rule-row{display:flex;align-items:flex-start;gap:0.75rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:0.75rem}
+.rule-icon{width:28px;height:28px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.875rem}
+.rule-content{flex:1;min-width:0}
+.rule-title{font-size:0.8125rem;font-weight:600;margin-bottom:0.125rem}
+.rule-val{font-size:0.75rem;color:var(--text-muted);font-family:var(--font-mono)}
+
+/* SYSTEM DIAGRAM */
+.flow{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem}
+.flow-row{display:flex;align-items:center;gap:0.5rem}
+.flow-box{flex:1;padding:0.5rem 0.875rem;border-radius:var(--r-md);font-size:0.8125rem;font-weight:500;border:1px solid var(--border);background:var(--surface);text-align:center}
+.flow-box.active-box{background:var(--primary-hl);border-color:var(--primary);color:var(--primary)}
+.flow-box.gold-box{background:var(--gold-hl);border-color:var(--gold);color:var(--gold)}
+.flow-box.muted-box{background:var(--surface-offset);color:var(--text-muted)}
+.flow-arrow{color:var(--text-faint);font-size:1rem;flex-shrink:0;text-align:center;width:20px}
+
+/* INLINE INFO BLOCKS */
+.info-block{padding:0.75rem 1rem;border-radius:var(--r-md);font-size:0.8125rem;margin-bottom:1rem;border-left:3px solid}
+.info-block.tip{background:var(--primary-hl);border-color:var(--primary);color:var(--text)}
+.info-block.warn{background:var(--warning-hl);border-color:var(--warning);color:var(--text)}
+.info-block strong{color:var(--primary)}
+.info-block.warn strong{color:var(--warning)}
+
+@media(max-width:600px){
+  header{padding:0.625rem 1rem}
+  main{padding:1rem 1rem 3rem}
+  .prompt-footer{flex-direction:column;align-items:flex-start}
+  .copy-btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <a class="logo" href="#">
+    <svg class="logo-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TVRemix Toolkit">
+      <rect width="28" height="28" rx="6" fill="var(--primary)"/>
+      <path d="M6 10h6v8M12 10h6l-3 4 3 4" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="21" cy="10" r="2" fill="var(--gold)"/>
+    </svg>
+    <div>
+      <div class="logo-text">TVRemix Toolkit</div>
+      <div class="logo-sub">MNQ primary · MCL secondary · Prop Rules</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <div class="quota-badge"><span class="quota-dot"></span>15 prompts/day</div>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-tab active" data-tab="scan">Session Scan</button>
+  <button class="nav-tab" data-tab="alerts">Alert Setup</button>
+  <button class="nav-tab" data-tab="memory">Memory Prompts</button>
+  <button class="nav-tab" data-tab="budget">Prompt Budget</button>
+  <button class="nav-tab" data-tab="system">System View</button>
+</nav>
+
+<main>
+
+<!-- ─── SESSION SCAN ──────────────────────────────────────────────── -->
+<div class="section active" id="tab-scan">
+  <div class="section-header">
+    <h2>Session Scan Prompts</h2>
+    <p>Run once per session. Identify PDH/PDL, structure, and bias before you do anything else. These are your level-finding prompts — output feeds the Alert Setup tab.</p>
+  </div>
+
+  <div class="info-block tip"><strong>Workflow:</strong> Run Scan #1 first. Note the levels it returns. Then open the Alert Setup tab and fill in those exact levels before copying those prompts.</div>
+
+  <div class="prompt-grid">
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-scan">Scan</span>
+          <span class="prompt-label">S1 · Pre-Session Level Map</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Analyze MNQ first. If MNQ is unavailable, use MCL. If I later specify another instrument, use that instead. Do the following in order:
+1. State yesterday's high (PDH) and yesterday's low (PDL) with exact prices.
+2. State the current session high and low so far on the active instrument.
+3. Is price currently above PDH, below PDL, or between them?
+4. Identify the nearest untested liquidity level above and below current price.
+5. What is the current 15M and 1H structure — is it making HH/HL or LH/LL?
+6. Give me a one-line directional bias for this session only.
+
+Be precise. Numbers only — no vague commentary.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run this first. The scan output feeds any custom-level alerts you still want Remix to create.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-scan">Scan</span>
+          <span class="prompt-label">S2 · Timeframe Confluence Check</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Still on the active instrument. Check 4 timeframes — 5M, 15M, 1H, 4H — and answer:
+1. On 4H: update the key trendlines or trend direction context if needed.
+2. On 1H: what is the main structure and bias?
+3. On 15M: what is the most recent BOS direction?
+4. On 5M: is there an entry-quality reaction forming right now?
+5. Do all 4 timeframes align? Yes / Partial / No — and why.
+
+Keep it short. I need a trade / no-trade decision.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Use after S1. If TF alignment is "No", skip the session.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-scan">Scan</span>
+          <span class="prompt-label">S3 · Setup Confirmation (Pre-Entry)</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Price is approaching [LEVEL] on [INSTRUMENT]. I'm watching for a [LONG/SHORT] setup.
+
+Check:
+1. Is this level a PDH, PDL, session high/low, or FVG — confirm which.
+2. Is there any reason NOT to take this trade right now? (price already extended, weak reaction, poor structure, low quality location)
+3. What is the clean stop placement and what R:R does that give at a target of [TARGET]?
+4. Final call: A-grade setup / B-grade setup / Skip — and one sentence why.
+
+Do not create any alerts yet. I need to confirm first.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Fill in [LEVEL], [LONG/SHORT], and [TARGET] from your S1 output before copying.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── ALERT SETUP ───────────────────────────────────────────────── -->
+<div class="section" id="tab-alerts">
+  <div class="section-header">
+    <h2>Alert Setup Prompts</h2>
+    <p>After your scan gives you the levels, use these only for non-PDH/PDL custom alerts and session guards. You already have PDH/PDL arrival alerts on your charts.</p>
+  </div>
+
+  <div class="info-block warn"><strong>Fill in levels first.</strong> The <mark style="background:var(--gold-hl);color:var(--gold);padding:0 3px;border-radius:2px">[bracketed placeholders]</mark> must be replaced with your actual prices from the session scan before you paste into Remix.</div>
+
+  <div class="prompt-grid">
+
+    
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-alert">Alert</span>
+          <span class="prompt-label">A2 · Liquidity Level Proximity Alert</span>
+        </div>
+        <span class="prompt-quota">1–2 prompts</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Create a price alert on [INSTRUMENT] for [LEVEL_PRICE].
+This is a [describe: e.g. untested liquidity / session high / session low / trendline touch] level.
+
+Alert conditions:
+- Trigger: price crosses [LEVEL_PRICE] on a 15M bar close
+- Alert name: "XAU [short level name]"
+- Message: "XAU approaching [level name] at [LEVEL_PRICE] — review S2 TF alignment before entry"
+- Trigger once, then reset manually
+
+No webhook. Confirm alert created.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Use for any secondary levels identified in Scan S2.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-alert">Alert</span>
+          <span class="prompt-label">A3 · Daily Loss Limit Guard</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Create a price alert on [INSTRUMENT] to act as a session kill-switch reminder.
+
+If my entry was at [ENTRY_PRICE] with a 1% risk stop, my account stop-out level is approximately [STOP_PRICE].
+
+Set an alert at [STOP_PRICE].
+- Name: "XAU DAILY LOSS LIMIT — STOP TRADING"
+- Message: "Price at your max daily risk level. Close all positions and close the platform."
+- Trigger: once, any timeframe
+
+This is a prop rule guard, not a trade alert. Confirm it is set.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Set this at the start of every live session. Keeps your prop rules enforced passively.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+<!-- ─── MEMORY PROMPTS ────────────────────────────────────────────── -->
+<div class="section" id="tab-memory">
+  <div class="section-header">
+    <h2>Memory Prompts — Teaching Remix Your Rules</h2>
+    <p>Run these once to encode your prop rules and strategy context into the session. Remix doesn't have persistent memory between sessions, so paste the relevant rule block at the start of each session alongside your scan prompt.</p>
+  </div>
+
+  <div class="info-block tip"><strong>How to use:</strong> Copy the Master Context block (M1) and paste it as your very first message in each Remix session. This front-loads all your rules so every subsequent response respects them without you repeating yourself.</div>
+
+  <div class="prompt-grid">
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-memory">Memory</span>
+          <span class="prompt-label">M1 · Master Context Block (Paste First Every Session)</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Before we start: here is my trading context. Apply these rules to every response in this session.
+
+INSTRUMENTS: MNQ is primary. MCL is secondary. Other instruments may be added later and should be treated as explicitly specified only.
+STRATEGY: Price action only. I trade around PDH and PDL, session structure, and level reactions.
+TIMEFRAMES: 5M entries. 15M and 1H for checking. 4H for adjusting trendlines and broader trend context.
+
+PROP FIRM RULES (hard limits — never suggest trades that violate these):
+- Max risk per trade: 1% of account
+- Daily loss limit: $1000 — if hit, I stop trading for the day
+- Max drawdown: $2000 — if hit, account is at risk
+
+TRADE CRITERIA (only suggest setups that meet all of these):
+- Setup must be at a named level: PDH, PDL, session H/L, or identified FVG
+- Minimum R:R = 2:1 before I consider entry
+- Structure must confirm direction on 1H before entry
+- No revenge trading — if I have already taken two losing trades today, flag this before suggesting another
+
+PERSONALITY: Give me numbers and decisions. Only short explanations if needed.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Daily loss and max drawdown are already filled in.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-memory">Memory</span>
+          <span class="prompt-label">M2 · Post-Trade Review Prompt</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">I just closed a trade. Help me log it quickly.
+
+Entry: [PRICE] | Exit: [PRICE] | Direction: [LONG/SHORT]
+Result: [WIN/LOSS] | P&L in R: [e.g. +2R or -1R]
+
+Questions:
+1. Did price respect the PDH/PDL level I entered at, or did it blow through?
+2. Was my stop placement logical given the current structure?
+3. One thing I did correctly and one thing I could improve.
+4. Updated daily P&L: I am now [+X or -X]R today. Am I within prop daily loss limit?
+
+Keep it to 4 bullet points total.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run this within 5 minutes of closing a trade. Keeps review disciplined without eating into your quota.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-memory">Memory</span>
+          <span class="prompt-label">M3 · News Filter Check</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">Check the economic calendar for the next 2 hours.
+
+Are there any high-impact news events affecting USD or gold (XAU)?
+Flag: NFP, CPI, FOMC, Fed speakers, ISM, PMI, GDP, or any gold-specific events.
+
+If yes: give me the exact time and expected impact.
+If nothing: confirm "Clear for [X] hours."
+
+My rule: news is a context check, not an automatic ban. Flag timing and likely volatility, then let me decide.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Run this before S1 on any day you're unsure about the calendar. Saves you from getting hit by news.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── PROMPT BUDGET ─────────────────────────────────────────────── -->
+<div class="section" id="tab-budget">
+  <div class="section-header">
+    <h2>Prompt Budget Guidance</h2>
+    <p>Remix is capped at 15 prompts per day. Here is how to spend them across a typical trading day without burning your quota on low-value questions.</p>
+  </div>
+
+  <div class="info-block warn"><strong>Don't waste quota on questions you already know the answer to.</strong> Remix is for level identification and alert setup. Your actual trading decision comes from your indicator and your eyes.</div>
+
+  <table class="budget-table" style="margin-bottom:1.5rem">
+    <thead>
+      <tr>
+        <th>When</th>
+        <th>Prompt</th>
+        <th>Cost</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Session start</td>
+        <td>M3 · News filter (only if unsure)</td>
+        <td>1</td>
+        <td><span class="tag tag-memory">situational</span></td>
+      </tr>
+      <tr>
+        <td>Session start</td>
+        <td>M1 · Master context block</td>
+        <td>1</td>
+        <td><span class="rec">required</span></td>
+      </tr>
+      <tr>
+        <td>Session start</td>
+        <td>S1 · Pre-session level map</td>
+        <td>1</td>
+        <td><span class="rec">required</span></td>
+      </tr>
+      <tr>
+        <td>Session start</td>
+        <td>S2 · TF confluence check</td>
+        <td>1</td>
+        <td><span class="rec">required</span></td>
+      </tr>
+            <tr>
+        <td>On level approach</td>
+        <td>S3 · Setup confirmation</td>
+        <td>1</td>
+        <td><span class="tag tag-scan">per setup</span></td>
+      </tr>
+      <tr>
+        <td>Session start or mid-session</td>
+        <td>A2 · Custom level alert</td>
+        <td>1</td>
+        <td><span class="tag tag-alert">as needed</span></td>
+      </tr>
+      <tr>
+        <td>Before any entry</td>
+        <td>A3 · Daily loss guard alert</td>
+        <td>1</td>
+        <td><span class="tag tag-rules">prop rule</span></td>
+      </tr>
+      <tr>
+        <td>After each trade</td>
+        <td>M2 · Post-trade review</td>
+        <td>1</td>
+        <td><span class="tag tag-memory">optional</span></td>
+      </tr>
+      <tr>
+        <td>Second session</td>
+        <td>Repeat S1 + S2 only</td>
+        <td>2</td>
+        <td><span class="tag tag-brief">if trading again</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1rem;font-size:0.8125rem">
+    <div style="font-weight:600;margin-bottom:0.5rem">Typical day breakdown</div>
+    <div style="color:var(--text-muted);line-height:1.8">
+      Quiet day (no trade): <strong style="color:var(--success)">3–4 prompts</strong> — M1 + S1 + S2<br>
+      Normal day (1 trade): <strong style="color:var(--gold)">5–7 prompts</strong> — above + S3 + A3 + M2<br>
+      Active day (2 sessions): <strong style="color:var(--warning)">8–11 prompts</strong> — two session scans + 2 setup checks<br>
+      Do not exceed 15. If you hit 12, stop using Remix and trade from your existing alerts only.
+    </div>
+  </div>
+</div>
+
+<!-- ─── SYSTEM VIEW ────────────────────────────────────────────────── -->
+<div class="section" id="tab-system">
+  <div class="section-header">
+    <h2>Full System View</h2>
+    <p>How Remix sits inside your trading stack. Each layer operates independently — Remix failure doesn't break your ability to trade.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box muted-box">📅 News filter check (M3) — optional, pre-session</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box gold-box">M1 · Load prop rules + strategy context into Remix</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box active-box">S1 + S2 · Scan for PDH/PDL, structure, and 5M/15M/1H/4H alignment → get levels</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box active-box">A2 · Set custom alerts only where needed. PDH/PDL arrival alerts already exist on your chart</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box muted-box">⏳ Walk away. Remix is now guarding the levels. You get Telegram when price arrives.</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box gold-box">Telegram fires → open chart → run S3 setup confirmation → decide</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box active-box">A3 · Set daily loss guard alert → your existing chart alerts fire → execute if valid</div>
+    </div>
+    <div class="flow-row"><div class="flow-arrow">↓</div></div>
+    <div class="flow-row">
+      <div class="flow-box muted-box">M2 · Post-trade review (optional) → reset alerts for next level</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:1rem 1.25rem;font-size:0.8125rem">
+    <div style="font-weight:600;margin-bottom:0.75rem;font-size:0.875rem">What Remix does vs. what you do</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div>
+        <div style="font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--primary);font-weight:600;margin-bottom:0.375rem">Remix handles</div>
+        <div style="color:var(--text-muted);line-height:1.9">
+          Identifying PDH/PDL and key levels<br>
+          Reading 5M / 15M / 1H / 4H structure<br>
+          Setting non-PDH/PDL custom alerts<br>
+          Confirming R:R on setups<br>
+          Post-trade logging
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.6875rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--gold);font-weight:600;margin-bottom:0.375rem">You handle</div>
+        <div style="color:var(--text-muted);line-height:1.9">
+          Watching your existing PDH/PDL alerts<br>
+          Deciding to enter or skip<br>
+          Executing the trade<br>
+          Enforcing prop rules<br>
+          Managing the position
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-block tip" style="margin-top:1rem"><strong>Key principle:</strong> Remix is your pre-session analyst and custom-level guard. Your existing chart alerts already handle PDH/PDL arrival. Remix adds decision support, not duplicate alerts.</div>
+</div>
+
+</main>
+</div>
+
+<script>
+// Tab navigation
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Theme toggle
+(function(){
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = r.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  r.setAttribute('data-theme', d);
+  function updateIcon() {
+    if (!t) return;
+    t.innerHTML = d === 'dark'
+      ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+  updateIcon();
+  t && t.addEventListener('click', () => {
+    d = d === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', d);
+    updateIcon();
+  });
+})();
+
+// Copy buttons
+function copyPrompt(btn) {
+  const card = btn.closest('.prompt-card');
+  const text = card.querySelector('.prompt-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
