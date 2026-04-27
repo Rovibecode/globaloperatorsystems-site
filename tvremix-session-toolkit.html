@@ -90,6 +90,7 @@ main{flex:1;max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem;width:100%}
   <button class="nav-tab active" data-tab="scan">Session Scan</button>
   <button class="nav-tab" data-tab="alerts">Alert Setup</button>
   <button class="nav-tab" data-tab="memory">Memory Prompts</button>
+  <button class="nav-tab" data-tab="news">News &amp; Calendar</button>
   <button class="nav-tab" data-tab="budget">Prompt Budget</button>
   <button class="nav-tab" data-tab="system">System View</button>
   <button class="nav-tab invest-tab" data-tab="investments">Investments</button>
@@ -262,7 +263,71 @@ TRADE CRITERIA (only suggest setups that meet all of these):
 
 PERSONALITY: Give me numbers and decisions. Only short explanations if needed.</div></div><div class="prompt-footer"><span class="prompt-hint">Fill in today's loss count before pasting.</span><button class="copy-btn" onclick="copyPrompt(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div></div></div></div>
 
-<div class="section" id="tab-budget"><div class="section-header"><h2>Prompt Budget Guidance</h2><p>Remix is capped at 15 prompts per day. Spend them on high-value decisions only.</p></div><div class="info-block warn"><strong>Best update:</strong> The new extension-only full session scan can replace your old S1 + S2 stack in one prompt when the extension can see your chart.</div><table class="budget-table" style="margin-bottom:1.5rem"><thead><tr><th>When</th><th>Prompt</th><th>Cost</th><th>Priority</th></tr></thead><tbody><tr><td>Session start</td><td>M1 · Master context block</td><td>1</td><td><span class="rec">required</span></td></tr><tr><td>Session start</td><td>S1 · Full extension scan</td><td>1</td><td><span class="rec">best option</span></td></tr><tr><td>Fallback workflow</td><td>S2 + S3 · Old segmented scan</td><td>2</td><td><span class="tag tag-scan">fallback</span></td></tr><tr><td>On level approach</td><td>S4 · Setup confirmation</td><td>1</td><td><span class="tag tag-scan">per setup</span></td></tr><tr><td>Before any entry</td><td>A3 · Daily loss guard alert</td><td>1</td><td><span class="tag tag-rules">prop rule</span></td></tr><tr><td>After each trade</td><td>M2 style review</td><td>1</td><td><span class="tag tag-memory">optional</span></td></tr><tr><td style="color:var(--invest)">Off-session</td><td style="color:var(--invest)">I1–I5 · Investments</td><td>1–2</td><td><span class="tag tag-invest">separate use</span></td></tr></tbody></table></div>
+
+<!-- NEWS & CALENDAR -->
+<div class="section" id="tab-news">
+  <div class="section-header">
+    <h2>News &amp; Calendar Prompts</h2>
+    <p>Pull live economic calendar data and news headlines via Claude MCP before each session. More accurate than asking Claude from memory alone.</p>
+  </div>
+  <div class="info-block warn"><strong>Claude MCP only.</strong> N1 uses the TVRemix MCP data feed to get real calendar event times and headlines. Do not run this in the TVRemix Extension chat — it will not have the MCP data access.</div>
+  <div class="prompt-grid">
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-alert">MCP News</span>
+          <span class="prompt-label">N1 · News &amp; Calendar Pull (Claude MCP only)</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">[Claude MCP — TVRemix data feed required. Do not use in the TVRemix Extension chat.]
+
+Via TVRemix MCP:
+1. Pull the economic calendar for today and tomorrow — USD and XAU-relevant events only, high-importance filter.
+2. Pull the latest news headlines for MNQM2026 — last 3 items, with full story if available.
+3. Are there any geopolitical or macro risk headlines in your knowledge that could affect NQ or gold today?
+4. Flag anything in the next 4 hours that could spike NQ volatility.
+5. Final call: Clear to trade / Elevated risk / Avoid — one sentence why.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Replaces M3 when Claude MCP is connected. Gets actual calendar times, not estimated knowledge. Run before M1 on any session where you are unsure.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="prompt-card-meta">
+          <span class="tag tag-alert">MCP News</span>
+          <span class="prompt-label">N2 · Mid-Session News Check (Claude MCP only)</span>
+        </div>
+        <span class="prompt-quota">1 prompt</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text">[Claude MCP — TVRemix data feed required. Do not use in the TVRemix Extension chat.]
+
+Via TVRemix MCP:
+1. Pull any new headlines for MNQM2026 in the last 2 hours.
+2. Are there any high-impact calendar events in the next 2 hours?
+3. Has anything changed since the start of session that would affect my current bias?
+4. Hold current bias / Reassess / Sit out — one sentence.</div>
+      </div>
+      <div class="prompt-footer">
+        <span class="prompt-hint">Use mid-session if price action becomes erratic or unexpected. Cheaper than re-running a full scan.</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="tab-budget"><div class="section-header"><h2>Prompt Budget Guidance</h2><p>Remix is capped at 15 prompts per day. Spend them on high-value decisions only.</p></div><div class="info-block warn"><strong>Best update:</strong> The new extension-only full session scan can replace your old S1 + S2 stack in one prompt when the extension can see your chart.</div><table class="budget-table" style="margin-bottom:1.5rem"><thead><tr><th>When</th><th>Prompt</th><th>Cost</th><th>Priority</th></tr></thead><tbody><tr><td>Pre-session (MCP)</td><td>N1 · News &amp; calendar pull</td><td>1</td><td><span class="tag tag-alert">situational</span></td></tr>
+      <tr><td>Session start</td><td>M1 · Master context block</td><td>1</td><td><span class="rec">required</span></td></tr><tr><td>Session start</td><td>S1 · Full extension scan</td><td>1</td><td><span class="rec">best option</span></td></tr><tr><td>Fallback workflow</td><td>S2 + S3 · Old segmented scan</td><td>2</td><td><span class="tag tag-scan">fallback</span></td></tr><tr><td>On level approach</td><td>S4 · Setup confirmation</td><td>1</td><td><span class="tag tag-scan">per setup</span></td></tr><tr><td>Before any entry</td><td>A3 · Daily loss guard alert</td><td>1</td><td><span class="tag tag-rules">prop rule</span></td></tr><tr><td>After each trade</td><td>M2 style review</td><td>1</td><td><span class="tag tag-memory">optional</span></td></tr><tr><td style="color:var(--invest)">Off-session</td><td style="color:var(--invest)">I1–I5 · Investments</td><td>1–2</td><td><span class="tag tag-invest">separate use</span></td></tr></tbody></table></div>
 
 <div class="section" id="tab-system"><div class="section-header"><h2>Full System View</h2><p>The extension can now sit at the top of your session workflow because it can read the actual chart on screen.</p></div><div class="flow"><div class="flow-row"><div class="flow-box gold-box">M1 · Load prop rules + session status</div></div><div class="flow-row"><div class="flow-arrow">↓</div></div><div class="flow-row"><div class="flow-box active-box">S1 · Full Session Scan in TVRemix Extension only → get chart-aware scan + live setup read</div></div><div class="flow-row"><div class="flow-arrow">↓</div></div><div class="flow-row"><div class="flow-box active-box">A2 / A3 as needed → set custom alerts and loss guard</div></div><div class="flow-row"><div class="flow-arrow">↓</div></div><div class="flow-row"><div class="flow-box muted-box">Wait for level → recheck with S4 only if price approaches a named level</div></div></div><div class="info-block tip" style="margin-top:1rem"><strong>Key principle:</strong> TVRemix Extension is for chart reading. Claude MCP is for data/API reasoning. Do not mix the extension-only scan prompt into Claude MCP.</div></div>
 
